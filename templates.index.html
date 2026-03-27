@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VISHU MATH</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script>
+async function uploadCamera() {
+  let file = document.getElementById("camera").files[0];
+  let form = new FormData();
+  form.append("image", file);
+  let res = await fetch("/camera", {method:"POST", body:form});
+  let data = await res.json();
+  document.getElementById("question").value = data.text;
+}
+</script>
+</head>
+<body>
+<div class="container">
+<h1>⚡ VISHU MATH – Hacker Style ⚡</h1>
+<form method="POST">
+<input type="text" name="question" id="question" placeholder="Enter math question">
+<br>
+<button type="submit">Solve</button>
+<button formaction="/pdf" formmethod="POST">Download PDF</button>
+<br><br>
+<p>Scan using camera:</p>
+<input type="file" id="camera" onchange="uploadCamera()">
+</form>
+<div id="result">
+<h2>{{ answer }}</h2>
+{% if graph %}
+<img src="{{ graph }}" alt="Graph">
+{% endif %}
+</div>
+</div>
+</body>
+</html>

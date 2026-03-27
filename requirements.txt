@@ -1,0 +1,6 @@
+Flask
+sympy
+matplotlib
+fpdf
+pillow
+pytesseract
